@@ -1,4 +1,4 @@
-// import { SubmitButton } from "@native-base/formik-ui";
+import { SubmitButton } from "@native-base/formik-ui";
 import createValidator from "class-validator-formik";
 import JWT from "expo-jwt";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -155,9 +155,9 @@ export const Login = ({ navigation }: NavigationProps) => {
                         </Text>
                       ) : null}
                     </FormControl>
-                    {/* <SubmitButton height={"12"} size={"lg"} mt="90">
+                    <SubmitButton height={"12"} size={"lg"} mt="90">
                       Entrar
-                    </SubmitButton> */}
+                    </SubmitButton>
                     <HStack mt="6" justifyContent="center">
                       <Link
                         onPress={() => navigation.navigate("RedefinePassword")}
