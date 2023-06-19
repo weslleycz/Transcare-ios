@@ -1,20 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Box, NativeBaseProvider } from "native-base";
+import { LogBox } from "react-native";
+import { AlertNotificationRoot } from "react-native-alert-notification";
+import { Routes } from "./Routes";
+// import { theme } from "./src/theme";
 
 export default function App() {
+  LogBox.ignoreLogs(["Warning: ..."]);
+  LogBox.ignoreAllLogs();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <AlertNotificationRoot>
+          <NativeBaseProvider>
+            <Box bg={"primary.100"} safeAreaTop />
+            <Routes />
+          </NativeBaseProvider>
+      </AlertNotificationRoot>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
