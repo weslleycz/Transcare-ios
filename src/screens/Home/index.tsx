@@ -1,5 +1,5 @@
 import { Box, HStack, useMediaQuery } from "native-base";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import {
   Image,
   ImageBackground,
@@ -8,35 +8,35 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Footer } from "../../components/Footer";
-import { MenuHeader } from "../../components/MenuHeader";
-import { Database } from "../../database/Database";
+// import { MenuHeader } from "../../components/MenuHeader";
+// import { Database } from "../../database/Database";
 import { NavigationProps } from "../../types/navigation";
 
 export const Home = ({ navigation }: NavigationProps) => {
-  useEffect(() => {
-    (async () => {
-      const database = new Database();
-      const quiz1 = await database.getItem("@quiz1");
-      const name = await database.getItem("@name");
-      const email = await database.getItem("@email");
-      if (!quiz1) {
-        console.log(quiz1);
-        navigation.navigate("Quiz", {
-          name: name,
-          email: email,
-          isQuiz2: false,
-          isLogin: true,
-        });
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const database = new Database();
+  //     const quiz1 = await database.getItem("@quiz1");
+  //     const name = await database.getItem("@name");
+  //     const email = await database.getItem("@email");
+  //     if (!quiz1) {
+  //       console.log(quiz1);
+  //       navigation.navigate("Quiz", {
+  //         name: name,
+  //         email: email,
+  //         isQuiz2: false,
+  //         isLogin: true,
+  //       });
+  //     }
+  //   })();
+  // }, []);
   const [isSmallScreen] = useMediaQuery({
     minHeight: 280,
     maxHeight: 760,
   });
   return (
     <>
-      <MenuHeader navigation={navigation} />
+      {/* <MenuHeader navigation={navigation} /> */}
       <ScrollView>
         <ImageBackground
           source={require("./imgs/Group.png")}

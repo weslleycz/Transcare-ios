@@ -16,7 +16,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.weslleycz.Transcareios"
+      "bundleIdentifier": "com.weslleycz.Transcareios",
+      "bitcode": false  
     },
     "android": {
       "adaptiveIcon": {

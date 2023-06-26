@@ -26,6 +26,7 @@
     "react": "18.2.0",
     "react-native": "0.71.8",
     "react-native-alert-notification": "^0.3.4",
+    "react-native-react-native-quiz-single-choice": "^1.0.3",
     "react-native-uuid": "^2.0.1"
   },
   "devDependencies": {
