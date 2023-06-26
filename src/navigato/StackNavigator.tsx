@@ -6,7 +6,7 @@ import { Register } from "../screens/Register";
 import { Small } from "../screens/Small";
 import { Splash } from "../screens/Splash";
 import { Quiz } from "../screens/Quiz";
-// import { Home } from "../screens/Home";
+import { Home } from "../screens/Home";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +19,7 @@ export const StackNavigator = () => {
       <Stack.Screen name="Quiz" component={Quiz} />
       <Stack.Screen name="RedefinePassword" component={RedefinePassword} />
       <Stack.Screen name="Register" component={Register} />
-      {/* <Stack.Screen name="Home" component={Home} /> */}
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
 };

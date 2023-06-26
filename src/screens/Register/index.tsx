@@ -23,7 +23,6 @@ import {
   VStack,
   WarningOutlineIcon,
 } from "native-base";
-import { useState } from "react";
 import { SafeAreaView, ScrollView, StatusBar, StyleSheet } from "react-native";
 import uuid from "react-native-uuid";
 import CryptoJS from 'crypto-js';
@@ -233,48 +232,6 @@ export const Register = ({ navigation }: NavigationProps) => {
                             onChangeText={handleChange("corporate_name")}
                           />
                         </FormControl>
-                        <FormControl bgColor={"rgba(0, 255, 255, 0)"} shadow={"6"} >
-                          <Select
-                            selectedValue={values.gender}
-                            minWidth="200"
-                            placeholderTextColor={"#2b2a2a68"}
-                            height={"16"}
-                            borderRadius={6}
-                            fontSize={17}
-                            width="full"
-                            bgColor={"#FFFFFF"}
-                            accessibilityLabel="Gênero"
-                            placeholder="Gênero"
-                            _selectedItem={{
-                              bg: "#FDA3B5",
-                              endIcon: <CheckIcon size="5" />,
-                            }}
-                            mt={1}
-                            onValueChange={handleChange("gender")}
-                          >
-                            <Select.Item
-                              fontSize={17}
-                              label="Masculino"
-                              value="Masculino"
-                            />
-                            <Select.Item
-                              fontSize={17}
-                              label="Feminino"
-                              value="Feminino"
-                            />
-                            <Select.Item
-                              fontSize={17}
-                              label="Transgênero"
-                              value="Transgênero"
-                            />
-                            <Select.Item
-                              fontSize={17}
-                              label="Não binário"
-                              value="Não binário"
-                            />
-                          </Select>
-                        </FormControl>
-
                         <FormControl>
                           <Input
                             placeholder="Idade"
