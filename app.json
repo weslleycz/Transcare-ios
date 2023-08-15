@@ -2,7 +2,7 @@
   "expo": {
     "name": "Transcare-ios",
     "slug": "Transcare-ios",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,9 +15,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.weslleycz.Transcareios",
-      "bitcode": false  
+      "supportsTablet": false,
+      "bundleIdentifier": "com.ufcg.transcareios",
+      "bitcode": false,
+      "plugins": [
+        {
+          "userTrackingPermission": "Os dados coletados por este aplicativo têm como único objetivo proporcionar uma experiência personalizada para você, sem qualquer utilização comercial ou para fins de publicidade."
+        }
+      ]
     },
     "android": {
       "adaptiveIcon": {
@@ -30,8 +35,11 @@
     },
     "extra": {
       "eas": {
-        "projectId": "743d0dd7-4aa5-43a6-abfa-582d8d0f8038"
+        "projectId": "3f917f5f-a47b-4915-a906-de6760ca13ec"
       }
-    }
+    },
+    "plugins": [
+      "expo-tracking-transparency"
+    ]
   }
 }

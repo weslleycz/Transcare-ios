@@ -1,5 +1,6 @@
 import { Box, SubmitButton } from "@native-base/formik-ui";
-import createValidator from "class-validator-formik";
+import CryptoJS from "crypto-js";
+import Checkbox from "expo-checkbox";
 import {
   collection,
   doc,
@@ -12,61 +13,96 @@ import { Formik } from "formik";
 import {
   Button,
   Center,
-  CheckIcon,
-  Checkbox,
   FormControl,
   Heading,
   Input,
   Link,
-  Select,
   Text,
-  VStack,
-  WarningOutlineIcon,
+  VStack
 } from "native-base";
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet } from "react-native";
+import { useState } from "react";
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  View,
+} from "react-native";
 import uuid from "react-native-uuid";
-import CryptoJS from 'crypto-js';
 import Container from "../../components/Container";
 import { Header } from "../../components/Header";
 import { process } from "../../env";
 import { firestore } from "../../servers/firebase";
 import { NavigationProps } from "../../types/navigation";
-import { UserDTO } from "../../validators/UserDTO";
 
 export const Register = ({ navigation }: NavigationProps) => {
+  const [isChecked, setChecked] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [checkboxError, setCheckboxError] = useState(false);
 
-  const onSubmit = async (values: UserDTO, { resetForm, setErrors }: any) => {
-    const { email, password, name, isCheckbox } = values;
-    let user = null;
-    const q = query(
-      collection(firestore, "Users"),
-      where("email", "==", email)
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      user = { ...data, id: doc.id };
-    });
-    if (user === null) {
-      const id = uuid.v4().toString();
-      const cipherPassword = CryptoJS.AES.encrypt(
-        password,
-        process.env.SecretKey
-      ).toString();
-      await setDoc(doc(firestore, "Users", id), {
-        ...values,
-        quiz1: false,
-        quiz2: false,
-        id,
-        password: cipherPassword,
-      });
-      navigation.navigate("Quiz", {
-        name: name,
-        email: email,
-        isQuiz2: false,
-        isLogin:true
-      });
+  const onSubmit = async (values: any, { resetForm, setErrors }: any) => {
+    setNameError(false);
+    setEmailError(false);
+    setPasswordError(false);
+    setCheckboxError(false);
+    let isError = false;
+
+    if (!values.email) {
+      setEmailError(true);
+      isError = true;
     }
+  
+    if (!values.name) {
+      setNameError(true);
+      isError = true;
+    }
+  
+    if (!values.password) {
+      setPasswordError(true);
+      isError = true;
+    }
+  
+    if (!isChecked) {
+      setCheckboxError(true);
+      isError = true;
+    }
+
+      if (!isError) {
+        const { email, password, name } = values;
+        let user = null;
+        const q = query(
+          collection(firestore, "Users"),
+          where("email", "==", email)
+        );
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          user = { ...data, id: doc.id };
+        });
+        if (user === null) {
+          const id = uuid.v4().toString();
+          const cipherPassword = CryptoJS.AES.encrypt(
+            password,
+            process.env.SecretKey
+          ).toString();
+          await setDoc(doc(firestore, "Users", id), {
+            ...values,
+            quiz1: false,
+            quiz2: false,
+            id,
+            password: cipherPassword,
+          });
+          navigation.navigate("Quiz", {
+            name: name,
+            email: email,
+            isQuiz2: false,
+            isLogin: true,
+          });
+        }
+      }
+  
   };
 
   return (
@@ -85,7 +121,7 @@ export const Register = ({ navigation }: NavigationProps) => {
           <ScrollView>
             <Center w="100%">
               <Formik
-                validate={createValidator(UserDTO)}
+                // validationSchema={validationSchema}
                 initialValues={{
                   name: "",
                   corporate_name: "",
@@ -94,7 +130,6 @@ export const Register = ({ navigation }: NavigationProps) => {
                   profession: "",
                   email: "",
                   password: "",
-                  isCheckbox: "",
                 }}
                 validateOnChange={false}
                 validateOnBlur={false}
@@ -116,9 +151,7 @@ export const Register = ({ navigation }: NavigationProps) => {
                           <Input
                             placeholder="Nome*"
                             placeholderTextColor={
-                              errors.name && touched.name
-                                ? "#ff2626"
-                                : "#2b2a2a68"
+                              nameError ? "#ff2626" : "#2b2a2a68"
                             }
                             style={{ fontSize: 17 }}
                             height={"16"}
@@ -128,32 +161,22 @@ export const Register = ({ navigation }: NavigationProps) => {
                             bgColor={"#FFFFFF"}
                             id="name"
                             autoFocus
-                            borderColor={
-                              errors.name && touched.name
-                                ? "#ff2626"
-                                : "#FFFFFF"
-                            }
+                            borderColor={nameError ? "#ff2626" : "#FFFFFF"}
                             value={values.name}
                             onChangeText={handleChange("name")}
                           />
-                          {errors.name && touched.name ? (
+                          {nameError ? (
                             <Text color={"#ff2626"} fontSize="md">
-                              <WarningOutlineIcon
-                                color={"#ff2626"}
-                                size="xs"
-                                mt={2}
-                              />{" "}
-                              {errors.name}
+                              Esse campo é obrigatório
                             </Text>
                           ) : null}
                         </FormControl>
+
                         <FormControl>
                           <Input
                             placeholder="E-mail*"
                             placeholderTextColor={
-                              errors.email && touched.email
-                                ? "#ff2626"
-                                : "#2b2a2a68"
+                              emailError ? "#ff2626" : "#2b2a2a68"
                             }
                             style={{ fontSize: 17 }}
                             height={"16"}
@@ -163,32 +186,22 @@ export const Register = ({ navigation }: NavigationProps) => {
                             bgColor={"#FFFFFF"}
                             id="email"
                             autoFocus
-                            borderColor={
-                              errors.email && touched.email
-                                ? "#ff2626"
-                                : "#FFFFFF"
-                            }
+                            borderColor={emailError ? "#ff2626" : "#FFFFFF"}
                             value={values.email}
                             onChangeText={handleChange("email")}
                           />
-                          {errors.email && touched.email ? (
+                          {emailError ? (
                             <Text color={"#ff2626"} fontSize="md">
-                              <WarningOutlineIcon
-                                color={"#ff2626"}
-                                size="xs"
-                                mt={2}
-                              />{" "}
-                              {errors.email}
+                              Você precisa informar o seu email
                             </Text>
                           ) : null}
                         </FormControl>
+
                         <FormControl>
                           <Input
                             placeholder="Senha*"
                             placeholderTextColor={
-                              errors.password && touched.password
-                                ? "#ff2626"
-                                : "#2b2a2a68"
+                              passwordError ? "#ff2626" : "#2b2a2a68"
                             }
                             style={{ fontSize: 17 }}
                             height={"16"}
@@ -199,22 +212,14 @@ export const Register = ({ navigation }: NavigationProps) => {
                             id="password"
                             autoFocus
                             type={"password"}
-                            borderColor={
-                              errors.password && touched.password
-                                ? "#ff2626"
-                                : "#FFFFFF"
-                            }
+                            borderColor={passwordError ? "#ff2626" : "#FFFFFF"}
                             value={values.password}
                             onChangeText={handleChange("password")}
                           />
-                          {errors.password && touched.password ? (
+
+                          {passwordError ? (
                             <Text color={"#ff2626"} fontSize="md">
-                              <WarningOutlineIcon
-                                color={"#ff2626"}
-                                size="xs"
-                                mt={2}
-                              />{" "}
-                              {errors.password}
+                              Você precisa informar a sua senha
                             </Text>
                           ) : null}
                         </FormControl>
@@ -262,22 +267,13 @@ export const Register = ({ navigation }: NavigationProps) => {
                           />
                         </FormControl>
 
-                        <Checkbox
-                          value={values?.isCheckbox}
-                          onChange={() =>
-                            setFieldValue(
-                              "isCheckbox",
-                              values?.isCheckbox != "true" ? "true" : ""
-                            )
-                          }
-                          isInvalid={
-                            errors.isCheckbox && touched.isCheckbox
-                              ? true
-                              : false
-                          }
-                          color={"#07ffc9"}
-                          my={1}
-                        >
+                        <View style={styles.section}>
+                          <Checkbox
+                            style={styles.checkbox}
+                            value={isChecked}
+                            onValueChange={setChecked}
+                            color={"#FDA3B5"}
+                          />
                           <Link
                             href="https://transcareufcg.blogspot.com/2023/04/bem-vindo-ao-nosso-aplicativo-para.html"
                             isExternal
@@ -285,25 +281,13 @@ export const Register = ({ navigation }: NavigationProps) => {
                               color: "primary.200",
                             }}
                           >
-                            <Text
-                              color={
-                                errors.isCheckbox && touched.isCheckbox
-                                  ? "#ff2626"
-                                  : ""
-                              }
-                            >
-                              Li e estou de acordo com os{" "}
-                            </Text>
+                            <Text>Li e estou de acordo com os </Text>
                             termos de uso
                           </Link>
-                        </Checkbox>
-                        {errors.isCheckbox && touched.isCheckbox ? (
+                        </View>
+
+                        {checkboxError ? (
                           <Text marginRight={6} color={"#ff2626"} fontSize="sm">
-                            <WarningOutlineIcon
-                              color={"#ff2626"}
-                              size="xs"
-                              mt={2}
-                            />
                             {` Você precisa aceitar os termos de uso para se registrar.`}
                           </Text>
                         ) : null}
@@ -339,5 +323,15 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
     width: 400,
     height: 90,
+  },
+  section: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  paragraph: {
+    fontSize: 15,
+  },
+  checkbox: {
+    margin: 8,
   },
 });

@@ -25,6 +25,6 @@ export class UserDTO {
   @IsNotEmpty({ message: "Você precisa informar a sua senha" })
   password!: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   isCheckbox!: string;
 }
