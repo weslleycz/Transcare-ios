@@ -1,3 +1,4 @@
+import { Box } from "native-base";
 import { ReactNode } from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 
@@ -8,13 +9,11 @@ type Pros = {
 const ContainerPath = ({ children }: Pros) => {
   return (
     <>
-      <ImageBackground
-        source={require("./background.png")}
-        resizeMode="cover"
+      <Box
         style={styles.image}
       >
         {children}
-      </ImageBackground>
+      </Box>
     </>
   );
 };

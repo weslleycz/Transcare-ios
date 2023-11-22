@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import { Box, Button, Heading, Text } from "native-base";
 import { useState } from "react";
-import { Image, ImageBackground } from "react-native";
+import { Image } from "react-native";
 import QuizeSingleChoice from "react-native-react-native-quiz-single-choice";
 import uuid from "react-native-uuid";
 import { Database } from "../../database/Database";
@@ -46,7 +46,7 @@ export const Quiz = ({ route, navigation }: NavigationProps) => {
 
   return inQuiz === "welcome" ? (
     <>
-      <ImageBackground source={require(`./imgs/bg2.png`)} resizeMode="cover">
+      <Box  resizeMode="cover">
         <Box>
           <Box top={2} marginLeft={20}>
             <Image source={require(`./imgs/Logo.png`)} />
@@ -106,10 +106,10 @@ export const Quiz = ({ route, navigation }: NavigationProps) => {
             </Button>
           </Box>
         </Box>
-      </ImageBackground>
+      </Box>
     </>
   ) : inQuiz === "quiz" ? (
-    <ImageBackground source={require(`./imgs/bg3.png`)} resizeMode="cover">
+    <Box>
       <Box height={"full"} style={{ padding: 7 }}>
         <QuizeSingleChoice
           containerStyle={{ backgroundColor: "#ff00000" }}
@@ -228,10 +228,10 @@ export const Quiz = ({ route, navigation }: NavigationProps) => {
           })}
         />
       </Box>
-    </ImageBackground>
+    </Box>
   ) : (
     <>
-      <ImageBackground source={require(`./imgs/bg1.png`)} resizeMode="cover">
+      <Box>
         <Box style={{ height: "100%" }} alignItems="center">
           <Box top={2}>
             {total === questions.length ? (
@@ -312,7 +312,7 @@ export const Quiz = ({ route, navigation }: NavigationProps) => {
             )}
           </Box>
         </Box>
-      </ImageBackground>
+      </Box>
     </>
   );
 };

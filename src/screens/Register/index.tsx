@@ -1,5 +1,5 @@
 import { Box, SubmitButton } from "@native-base/formik-ui";
-import CryptoJS from "crypto-js";
+import CryptoJS from "react-native-crypto-js";
 import Checkbox from "expo-checkbox";
 import {
   collection,
@@ -85,7 +85,7 @@ export const Register = ({ navigation }: NavigationProps) => {
           const id = uuid.v4().toString();
           const cipherPassword = CryptoJS.AES.encrypt(
             password,
-            process.env.SecretKey
+            process.env.SecretKey,
           ).toString();
           await setDoc(doc(firestore, "Users", id), {
             ...values,

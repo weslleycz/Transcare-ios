@@ -1,3 +1,4 @@
+import { Box } from "native-base";
 import { ReactNode } from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 
@@ -6,22 +7,17 @@ type Pros = {
 };
 
 export const ContainerUniverse = ({ children }: Pros) => {
-    return(<>
-    <ImageBackground
-        source={require("./background.png")}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        {children}
-      </ImageBackground>
-    </>)
-}
+  return (
+    <>
+      <Box style={styles.image}>{children}</Box>
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
-    image: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-  });
-  
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

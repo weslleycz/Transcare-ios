@@ -38,8 +38,7 @@ export const Home = ({ navigation }: NavigationProps) => {
     <>
       <MenuHeader navigation={navigation} />
       <ScrollView>
-        <ImageBackground
-          source={require("./imgs/Group.png") }
+        <Box
           style={styles.image}
         >
           <Box marginTop={isSmallScreen ? 20 : 40}>
@@ -53,7 +52,7 @@ export const Home = ({ navigation }: NavigationProps) => {
             </HStack>
             <Image source={require(`./imgs/isa.png`)} />
           </Box>
-        </ImageBackground>
+        </Box>
       </ScrollView>
       <Footer navigation={navigation} /> 
     </>

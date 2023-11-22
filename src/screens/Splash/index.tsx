@@ -1,6 +1,6 @@
-import { Text } from "native-base";
-import { useEffect } from "react";
-import { ImageBackground, StyleSheet } from "react-native";
+import { Box, Text } from "native-base";
+import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
 import { Logo } from "../../components/Logo";
 import { Database } from "../../database/Database";
 import { NavigationProps } from "../../types/navigation";
@@ -21,11 +21,7 @@ export const Splash = ({ navigation }: NavigationProps) => {
 
   return (
     <>
-      <ImageBackground
-        source={require("./background.png")}
-        resizeMode="cover"
-        style={styles.image}
-      >
+      <Box style={styles.image}>
         <Logo height={160} width={160} />
         <Text color={"#38B6FF"} bold fontSize="6xl">
           Trans
@@ -33,7 +29,7 @@ export const Splash = ({ navigation }: NavigationProps) => {
             care
           </Text>
         </Text>
-      </ImageBackground>
+      </Box>
     </>
   );
 };

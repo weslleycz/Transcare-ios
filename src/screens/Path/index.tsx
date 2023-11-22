@@ -18,8 +18,7 @@ export const Path = ({ navigation }: NavigationProps) => {
   return (
     <>
       <MenuHeader navigation={navigation} />
-      <ImageBackground
-        source={require("./imgs/background.png")}
+      <Box
         resizeMode="stretch"
         style={styles.image}
       >
@@ -100,7 +99,7 @@ export const Path = ({ navigation }: NavigationProps) => {
             </TouchableOpacity>
           </Box>
         </ScrollView>
-      </ImageBackground>
+      </Box>
       <FooterBlue navigation={navigation} />
     </>
   );
