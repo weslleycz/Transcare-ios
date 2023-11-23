@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Transcare-ios",
-    "slug": "Transcare-ios",
+    "slug": "transcare-ios",
     "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -35,7 +35,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "3f917f5f-a47b-4915-a906-de6760ca13ec"
+        "projectId": "8e768dce-fd12-4ecc-a2fb-efc039eef6d4"
       }
     },
     "plugins": [
